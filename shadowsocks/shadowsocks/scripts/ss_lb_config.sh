@@ -5,7 +5,7 @@ eval `dbus export ss`
 # 引用环境变量等
 source /koolshare/scripts/base.sh
 username=`nvram get http_username`
-alias echo_date='echo $(date +%Y年%m月%d日\ %X):'
+alias echo_date='echo 【$(TZ=UTC-8 date -R +%Y年%m月%d日\ %X)】:'
 
 write_haproxy_cfg(){
 	echo_date 生成haproxy配置文件到/koolshare/configs目录.
@@ -200,5 +200,7 @@ if [ "$ss_lb_enable" == "1" ];then
 	start_haproxy
 	echo_date 成功！
 else
+	echo_date 关闭haproxy进程！
 	killall haproxy >/dev/null 2>&1
+	echo_date 成功！
 fi
